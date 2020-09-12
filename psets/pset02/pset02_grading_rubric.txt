@@ -1,0 +1,32 @@
+Problem set #2 Grading Rubric:
+
+  1 points, correct file names, zip files, ect. (this is a all or nothing point!)
+
+  4 points, implementation of additive model (there will be some partial credit here):
+
+    2 points for us being able to run either of these:
+
+      Rscript pset02.R train.csv test.csv
+      python3 pset02.py train.csv test.csv
+
+    And reproducing the results.csv. You do not need to be exact, but should aim for a correlation of around 0.9.
+
+    2 points for being able to run this with a new (unknown) train.csv and test.csv and again replicating the results
+
+  5 points, for the questions (one point per question)
+
+
+Remember, we will drop your lowest grade of the semester and average the
+  remaining assignments (expecting there to be 9 total). This will map
+  to final grades as follows:
+
+  10    A    H
+   9    A-   H
+   8    B+   HP
+   7    B    HP
+   6    B-   HP
+   5    C+   P
+   4    C    P
+   3    C-   P
+   2    D    F
+   1    D    F

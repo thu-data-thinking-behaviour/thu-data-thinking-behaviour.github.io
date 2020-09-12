@@ -1,0 +1,324 @@
+"campaign","country","year","outcome","nonviol","democracy","sanctions","aid","support","viol.repress","defect","duration"
+"Cuban Revolution","Cuba",1959,1,0,-9,0,1,1,1,1,1095
+"Caco Revolt","Haiti",1920,0,0,10,0,1,0,1,0,730
+"","Haiti",1985,1,1,-9,0,0,0,1,1,360
+"Dominican insurgency","Dominican Republic",1924,0,0,10,0,0,0,1,0,2920
+"leftists","Dominican Republic",1965,0,0,NA,0,1,0,1,1,360
+"Liberals and Radicals rebellion","Mexico",1920,1,0,-1,0,0,0,1,NA,3650
+"Huerta led rebels","Mexico",1924,0,0,-1,0,1,0,1,1,549
+"Cristeros rebellion","Mexico",1930,0,0,-3,0,0,0,1,0,1460
+"Escoban-led rebellion","Mexico",1929,0,0,-3,0,0,1,1,1,75
+"","Mexico",2000,1,1,6,0,0,0,0,1,360
+"","Mexico",2006,0,1,NA,0,0,0,0,0,360
+"October Revolutionaries","Guatemala",1944,1,1,-9,0,0,0,1,1,360
+"Conservative movement","Guatemala",1954,1,0,2,0,1,1,0,1,10
+"Marxist rebels (URNG)","Guatemala",1996,0.5,0,3,1,0,0,1,1,12775
+"Indian resistance","Guatemala",1972,0,0,1,0,0,0,1,0,2190
+"Conservative movement","Honduras",1924,0,0,5,0,1,0,1,0,360
+"leftist rebellion","El Salvador",1932,0,0,-9,0,0,0,1,1,360
+"Strike of Fallen Arms","El Salvador",1944,1,1,-9,0,0,0,1,1,360
+"","El Salvador",1981,0,1,NA,1,1,0,1,0,730
+"Farabundo Marti National Liberation Front (FMLN)","El Salvador",1991,0.5,0,7,0,1,0,1,1,4380
+"Nicaraguan Guerillas","Nicaragua",1932,1,0,-3,0,1,0,0,0,2555
+"FSLN","Nicaragua",1979,0,0,8,0,0,0,1,0,549
+"Contras","Nicaragua",1990,0,0,-1,1,0,1,1,1,3650
+"National Union Party","Costa Rica",1948,1,0,10,0,0,0,1,1,42
+"","Panama",1989,0,1,-8,1,1,1,1,0,360
+"Conservative movement","Colombia",1949,1,0,-5,0,0,0,1,0,549
+"Liberals of 1949","Colombia",1949,0,0,-5,0,0,0,1,0,360
+"Revolutionary Armed Forces of Colombia and National Liberation Army","Colombia",2006,0,0,NA,0,0,0,1,1,15695
+"La Revolución Libertador","Venezuela",1903,0,0,-3,0,0,1,1,0,730
+"","Venezuela",1958,1,1,-3,0,1,0,1,1,360
+"Armed Forces for National Liberation (FALN)","Venezuela",1963,0,0,6,0,0,0,0,1,1825
+"anti-coup","Venezuela",2002,1,1,6,0,0,0,1,1,2
+"","Guyana",1992,1,1,-7,0,0,0,1,1,367
+"Aprista rebels","Peru",1932,0,0,NA,0,0,0,1,0,30
+"Senderista Insurgency (Sendero Luminoso) The Shinning Path","Peru",1995,0,0,1,0,0,0,1,1,5475
+"Senderista Insurgency (Tupac Amaru Revolutionary Movement (MRTA))","Peru",1997,0,0,1,0,0,0,1,1,360
+"","Peru",2000,1,1,1,0,0,0,1,0,60
+"Paolistas","Brazil",1932,0,0,NA,0,0,0,1,1,90
+"diretas ja","Brazil",1985,1,1,-3,1,0,0,1,1,1460
+"Acre rebellion","Bolivia",1903,0,0,2,0,0,0,1,0,549
+"leftists","Bolivia",1952,1,0,-5,0,0,0,1,1,3
+"","Bolivia",1982,1,1,-7,1,0,0,1,1,1825
+"leftist rebellion","Paraguay",1947,0,0,-9,0,0,0,1,1,180
+"","Chile",1931,1,1,-2,0,1,0,0,1,360
+"Pinochet-led rebels","Chile",1973,1,0,6,1,0,1,0,1,360
+"","Chile",1989,1,1,-1,1,1,0,1,1,2190
+"ERP/Monteneros","Argentina",1977,0,0,-9,0,0,0,1,0,1460
+"pro-democracy movement","Argentina",1981,1,1,-9,0,1,0,1,0,1460
+"","Argentina",1986,1,1,8,0,0,0,0,1,360
+"Blancos Rebellion","Uruguay",1904,0,0,-3,0,1,0,1,0,360
+"Tupamaros","Uruguay",1972,0,0,NA,0,0,1,1,1,3285
+"","Uruguay",1985,1,1,-7,0,0,0,1,0,360
+"Dervish resistance","Somalia",1905,0,0,8,0,0,0,1,0,2190
+"Zulu Rebellion (Natal Rebellion)","Natal",1906,0,0,8,0,0,0,1,0,360
+"IRA","Northern Ireland",2006,0.5,0,NA,0,0,1,1,1,14235
+"French resistance","France",1945,0.5,0,-9,1,1,1,1,1,1825
+"Secret Army Organization","France",1962,0,0,5,0,0,0,0,0,1460
+"Asturian miners","Spain",1934,0,0,7,0,0,0,1,0,29
+"Fascists","Spain",1939,1,0,7,0,1,1,1,0,1095
+"ETA","Spain",2006,0,0,NA,0,0,0,0,0,14235
+"Carnation Revolution","Portugal",1974,1,1,-9,0,0,0,1,1,360
+"South West African Revolt (Herero Revolt)","Namibia/South West Africa",1905,0,0,1,0,0,0,1,0,549
+"Ruhrkampf resistance","Germany",1923,1,1,9,0,0,1,1,0,360
+"","East Germany",1953,0,1,-8,0,1,0,1,0,360
+"","East Germany",1956,0,1,-8,0,1,0,1,0,360
+"pro-dem movement","East Germany",1989,1,1,-9,0,1,0,0,1,60
+"Polish resistance","Poland",1944,0,0,-9,1,1,1,1,0,360
+"","Poland",1956,0.5,1,-7,0,1,0,1,0,150
+"","Poland",1970,0.5,1,-7,0,1,0,1,0,549
+"Solidarity","Poland",1989,1,1,-6,1,1,0,1,0,2920
+"socialists","Austria",1934,0,0,NA,0,1,1,1,0,29
+"anti-communist movement (Whites)","Hungary",1920,1,0,-7,0,0,1,1,0,549
+"","Hungary",1956,0,1,-7,0,0,0,1,0,360
+"pro-dem movement","Hungary",1989,1,1,-2,0,1,0,1,0,210
+"","Czechoslovakia",1968,0,1,-7,0,0,0,1,0,360
+"Velvet Revolution","Czechoslovakia",1989,1,1,-7,0,1,0,1,0,23
+"People Against Violence","Slovakia",1992,1,1,8,0,0,0,0,0,1095
+"Italian resistance","Italy",1945,0,0,-9,1,1,1,1,0,730
+"","Albania",1989,0.5,1,-9,0,1,0,1,0,360
+"","Croatia",2000,1,1,NA,0,0,0,0,0,367
+"student protests","Yugoslavia",1968,0.5,1,-7,0,1,0,0,0,360
+"Croatian nationalists","Yugoslavia",1971,0,1,-7,0,1,0,1,0,360
+"Kosovo Albanian nationalist movement","Yugoslavia",1981,0,1,-5,0,1,0,1,0,360
+"Croats","Yugoslavia",1992,1,0,-5,1,0,0,1,0,730
+"Serb militias","Bosnia-Herzegovina",1995,0,0,NA,0,1,0,1,0,1460
+"Balkan resistance","Serbia",1945,0.5,0,-9,1,1,1,1,1,1825
+"Kosovo Albanian","Yugoslavia",1999,0,1,-6,1,0,1,1,0,3650
+"KLA","Serbia",1999,0.5,0,-6,1,0,1,1,0,1825
+"","Yugoslavia",2000,1,1,-6,1,0,1,1,1,360
+"","Slovenia",1990,1,1,-7,0,1,0,1,0,367
+"Greek resistance","Greece",1945,0,0,-9,1,1,1,1,0,730
+"Greek communists","Greece",1949,0,0,10,0,1,1,1,0,1825
+"","Greece",1963,1,1,4,0,0,0,1,0,210
+"","Greece",1974,1,1,-7,0,1,0,1,1,360
+"Ethniki Organosis Kyprios Agoniston","Cyprus",1959,1,0,10,0,0,0,0,0,1825
+"Agrarian League movement","Bulgaria",1923,0,0,-3,0,0,0,1,0,360
+"","Bulgaria",1989,1,1,-7,0,1,0,1,0,360
+"Dniestr","Moldova",1992,0.5,0,5,0,0,0,1,0,360
+"Peasant Rebellion","Romania",1907,0,0,-6,0,0,0,1,0,14
+"","Romania",1989,0,1,-8,1,1,0,1,1,730
+"anti-Ceaucescu rebels","Romania",1989,1,0,-8,1,0,0,1,1,3
+"Peasants in Ta (Tambov Rebellion)","USSR",1921,0,0,-1,0,0,0,1,0,549
+"Central Asian rebels","USSR",1935,0,0,-9,0,0,0,1,0,1825
+"Belarus resistance","USSR",1945,0,0,-9,1,1,1,1,0,1460
+"Ukrainian rebellion","USSR",1953,0,0,-9,0,0,0,1,0,2555
+"pro-dem movement","Russia",1991,1,1,0,1,1,0,1,1,549
+"Peasant/Worker Rebellion","Russia",1906,0.5,0,NA,0,0,0,1,1,549
+"Kirghiz and Kazables rebels","Russia",1917,1,0,-6,0,0,0,1,1,549
+"anti-Bolsheviks","Russia",1921,0,0,-1,0,0,0,1,0,1460
+"Chechen separatists","Russia",2006,0,0,NA,0,0,0,1,1,4745
+"Singing Revolution","Estonia",1989,1,1,-7,0,1,0,1,0,2
+"pro-dem movement","Latvia",1989,1,1,-7,0,1,0,0,0,2
+"pro-democracy movement/Sajudis","Lithuania",1991,1,1,0,1,0,0,1,1,730
+"Orange Revolution","Ukraine",2004,1,1,6,0,1,1,1,1,1095
+"","Belarus",1989,0.5,1,-7,0,1,0,1,0,360
+"","Belarus",2006,0,1,-7,0,0,0,0,0,360
+"Gamsakurdia & Abkaz","Georgia",1994,0,0,4,0,1,1,1,0,1095
+"Rose Revolution","Georgia",2003,1,1,5,0,0,1,0,1,21
+"Armenians in Nagorno-Karabakh","Azerbaijan",1994,0.5,0,-3,0,1,1,1,0,1095
+"communist rebels","Finland",1918,0,0,8,0,0,1,1,0,60
+"","Norway",1944,0.5,1,-9,1,1,1,1,0,360
+"","Denmark",1944,0.5,1,-9,1,1,1,1,0,360
+"PAIGC","Guinea-Biaasu",1974,1,0,-9,1,0,1,1,0,4015
+"Tauregs","Mali",1994,0,0,7,0,0,0,1,0,1825
+"","Mali",1992,1,1,NA,0,0,0,1,1,1095
+"","Senegal",2000,0.5,1,-1,0,0,0,1,0,360
+"","Benin",1990,0.5,1,-7,0,1,0,1,1,360
+"","Niger",1992,0,1,NA,0,0,0,1,0,367
+"PMIC","Ivory Coast",2005,0,0,NA,1,0,0,1,0,1095
+"anti-Doe rebels","Liberia",1990,1,0,-6,0,0,0,1,0,549
+"NPFL & ULIMO","Liberia",1995,0.5,0,NA,0,0,0,1,0,1095
+"national patriotic forces","Liberia",1996,0,0,NA,0,0,0,1,0,360
+"LURD","Liberia",2003,1,0,0,0,1,1,1,0,360
+"RUF","Sierra Leone",1996,0.5,0,-7,0,0,1,1,0,1825
+"Convention People's Party movement","Ghana",1957,1,1,10,0,0,0,1,0,2190
+"","Ghana",2000,1,1,2,0,0,0,0,0,360
+"anti-colonialist movement","Cameroon",1960,1,0,5,0,0,0,1,0,2190
+"Independence Movement","Nigeria",1950,0.5,1,10,0,0,0,1,0,1825
+"Biafrans","Nigeria",1970,0,0,-7,1,1,1,1,0,1095
+"Muslim fundamentalists","Nigeria",1984,0,0,7,0,0,0,1,0,1460
+"Ogoni movement","Nigeria",1995,0,1,NA,1,0,0,1,0,1825
+"","Nigeria",1999,1,1,NA,1,0,0,1,0,2190
+"multiple factions","CAR",1997,1,0,5,0,0,1,1,0,1095
+"Frolinat","Chad",1990,1,0,-7,0,1,1,1,0,8760
+"rebels","Chad",1998,0,0,-2,0,0,1,1,0,1460
+"Denis Sassou Nguemo","Congo-Brazzaville (ROC)",1999,1,0,-6,0,0,1,1,0,549
+"Katanga-led leftists","Zaire/DRC",1965,0,0,-9,0,0,1,1,0,1095
+"FLNC","Zaire/DRC",1978,0,0,-9,0,0,0,1,0,360
+"rebels (People's Revolutionary Party)","Zaire/DRC",1993,0,0,NA,0,0,0,1,0,360
+"Kabila-ADFL","Zaire/DRC",1997,1,0,NA,0,0,1,1,0,549
+"Buganda Tribe","Uganda",1966,0,0,7,0,0,0,0,0,360
+"National Resistance Army","Uganda",1988,1,0,-7,0,0,0,1,1,2920
+"LRA","Uganda",2006,0,0,NA,0,1,0,1,0,4380
+"","Kenya",1938,0,0,10,0,0,0,1,0,360
+"Mau Mau Rebellion","Kenya",1956,0,0,10,0,0,0,1,1,1460
+"NFDLM secessionists","Kenya",1969,0,0,0,0,0,1,1,0,1825
+"","Kenya",1989,0.5,1,-7,0,0,0,1,0,360
+"Maji Maji Revolt","Tanzania/German East Africa",1906,0,0,1,0,0,0,1,0,549
+"pro-democracy movement","Tanzania",1995,0.5,1,-6,0,0,0,0,0,1095
+"Hutu rebellion","Burundi",2002,0,0,NA,0,0,0,1,0,10950
+"Tutsi supremacists","Burundi",1992,0,0,-7,0,0,0,1,0,549
+"Rwandan independence","Rwanda",1961,1,0,10,0,0,0,1,0,1825
+"Watusi","Rwanda",1964,0,0,-5,0,0,0,1,0,549
+"Tutsi rebels","Rwanda",1993,0.5,0,-7,0,0,1,1,0,1095
+"Patriotic Front","Rwanda",1994,1,0,NA,1,0,0,1,0,360
+"clan factions; SNM","Somalia",1997,1,0,NA,0,0,1,1,1,5475
+"Somalia militia insurgencies","Somalia",1994,1,0,10,0,1,0,1,0,730
+"Afar insurgency","Djibouti",1994,0,0,-7,0,0,1,1,0,1095
+"Eritrean-led rebels","Ethiopia",1991,1,0,-8,1,1,0,1,0,6205
+"Somali rebels (Ogaden)","Ethiopia",1983,0,0,-7,1,1,1,1,0,2555
+"Tigrean Liberation Front","Ethiopia",1991,1,0,-8,1,1,0,1,0,4745
+"Shifta insurgency","Eritrea",1952,0,0,10,0,0,0,1,0,2555
+"Popular Movement for the Liberation of Angola","Angola",1974,1,0,-9,1,0,1,1,0,4745
+"UNITA","Angola",2001,0.5,0,-3,0,1,1,1,0,9490
+"Front for the Liberation of Mozambique","Mozambique",1972,1,0,-9,1,0,1,1,0,3285
+"Renamo","Mozambique",1992,0,0,-6,0,1,1,1,1,4745
+"","Zambia",1963,1,1,10,0,0,0,0,1,730
+"","Zambia",1991,0.5,1,-9,0,0,0,1,0,367
+"","Zambia",2001,1,1,1,0,0,0,0,0,360
+"Zimbabwe African People's Union","Zimbabwe",1980,1,0,10,0,1,0,1,0,2190
+"PF-ZAPU guerillas","Zimbabwe",1987,0.5,0,1,0,0,0,1,0,1460
+"Nyasaland African Congress","Malawi",1959,1,1,10,0,0,0,1,1,360
+"","Malawi",1994,1,1,-8,1,0,0,0,0,730
+"Boer separatists","South Africa",1902,0,0,8,0,0,0,1,1,1095
+"Defiance Campaign","South Africa",1961,0,1,4,0,0,0,1,0,3285
+"Anti-Apartheid","South Africa",1994,1,1,NA,1,0,1,1,0,2650
+"SWAPO","Namibia",1988,1,0,4,0,1,1,1,0,4015
+"Franco-Madagascan","Madagascar",1948,0,0,10,0,0,0,1,0,549
+"Active Voices","Madagascar",1993,1,1,9,0,0,0,1,0,730
+"pro-democracy movement","Madagascar",2003,1,1,7,0,0,0,0,0,549
+"Fez Caids Rebellion","Morocco",1908,0,0,8,0,0,0,1,0,2190
+"Wars of Independence","Morocco",1917,0,0,8,0,0,0,1,1,2190
+"Rifian Rebellion","Morocco",1926,0,0,9,0,0,0,1,0,1825
+"Moroccan Independence War","Morocco",1956,1,0,10,0,1,0,1,0,1095
+"Ifni war","Morocco",1958,0,0,-7,0,0,0,1,0,549
+"Western Sahara Freedom Movement (POLISARIO)","Western Sahara",1991,0.5,0,-8,0,0,0,0,1,5840
+"Algerian Revolt/National Liberation Front","Algeria",1962,1,0,5,0,0,1,1,0,3650
+"former rebel leaders","Algeria",1963,0,0,-8,0,0,0,1,1,549
+"Islamic Salvation Front","Algeria",2006,0,0,NA,1,0,0,1,0,5475
+"Tunisian independence movement","Tunisia",1954,1,0,10,0,0,0,1,0,1095
+"Italo-Libyan War (Sanusi)","Libya",1932,0,0,-9,0,0,0,1,0,4380
+"Anya Nya","Sudan",1973,0.5,0,-7,0,1,1,1,0,4015
+"SPLA-Garang faction","Sudan",2005,0.5,0,NA,0,1,0,1,1,8030
+"","Sudan",1985,1,1,-7,0,0,0,1,1,14
+"JEM/SLA","Sudan",2006,0,0,NA,1,0,1,1,0,1095
+"Constitutionalists","Iran",1909,1,0,NA,0,0,0,1,0,549
+"Iranian Revolution","Iran",1979,1,1,-10,0,1,0,1,1,549
+"KDPI","Iran",1996,0,0,-6,0,1,1,1,0,6205
+"Mujahideen","Iran",1982,0,0,NA,0,0,0,1,0,549
+"VMRO Rebels (Macedonians) in Ilinden uprising","Ottoman Empire",1903,0,0,-10,0,0,0,1,0,360
+"Arab Revolt","Turkey",1918,0.5,0,-1,0,0,1,1,0,730
+"Kockiri rebellion Kurdistan (KTC)","Turkey",1922,0,0,NA,0,0,0,1,0,730
+"Sheikh Said insurgency","Turkey",1927,0,0,-6,0,0,0,1,0,1095
+"Kurdish rebellion","Turkey",1997,0,0,8,0,0,0,1,0,2190
+"Iraqi rebels","Iraq",1920,0.5,0,8,0,0,0,1,NA,360
+"Shammar Tribe and pro-Western officers","Iraq",1959,0,0,-5,0,1,0,1,1,360
+"Kurdish rebellion","Iraq",1975,0,0,-7,0,1,1,1,1,5110
+"Kurdish rebellion","Iraq",1993,0,0,-9,1,0,1,1,0,4380
+"Shiite rebellion","Iraq",1991,0,0,-9,1,0,1,1,0,30
+"KDP Kurds","Iraq",1996,0,0,-9,1,0,1,1,0,360
+"Iraqi insurgency","Iraq",2006,0,0,NA,0,1,0,1,0,1460
+"Kifaya","Egypt",2005,0.5,1,-6,0,0,0,1,0,1825
+"Franco-Syrian War","Syria",1920,0,0,9,0,0,0,1,0,360
+"Muslim Brotherhood","Syria",1982,0,0,-9,0,0,0,1,0,730
+"Druze Revolt","Lebanon",1927,0,0,9,0,0,1,1,0,730
+"leftists","Lebanon",1958,0,0,2,0,1,0,1,0,360
+"leftists","Lebanon",1975,0,0,5,0,1,0,1,0,360
+"Hizballah","Lebanon",2000,1,0,10,0,1,1,1,0,6570
+"Cedar Revolution","Lebanon",2005,1,1,NA,0,1,0,1,0,60
+"Palestinian activists","Jordan",1970,0,0,-9,0,1,1,1,0,360
+"Jewish resistance","Palestinian Territories",1948,1,0,10,0,0,0,0,0,1095
+"Palestinian Liberation","Palestinian Territories",2006,0,0,NA,1,1,1,1,1,12410
+"Intifada","Palestine",1990,0.5,1,9,1,1,0,1,1,1095
+"Palestinian Arab Revolt","Palestine",1939,0.5,0,10,0,0,0,0,0,1095
+"Druze resistance","Israel",1982,0.5,1,9,1,1,0,1,0,549
+"Ikhwan rebellion","Saudi Arabia",1930,0,0,-10,0,0,0,1,0,549
+"Yahya Family revolt","Yemen Arab Republic",1948,1,0,NA,0,0,0,0,0,360
+"Yemeni insurgency","Yemen",1957,0,0,-6,0,0,0,1,0,730
+"Royalists","Yemen Arab Republic",1969,0.5,0,-3,0,1,1,1,0,2555
+"FLOSY, NLF in Aden","Yemen",1967,1,0,10,0,0,0,1,0,1460
+"leftists","Yemen People's Republic",1986,0.5,0,-8,0,0,0,1,1,360
+"Popular Front for the Liberation of Oman and the Arab Gulf (PFLOAG)","Oman",1976,0.5,0,-10,0,0,0,1,1,2555
+"Third Anglo-Afghan War","Afghanistan",1919,1,0,8,0,0,0,1,1,90
+"Anti-Reformist movement","Afghanistan",1929,0,0,-6,0,0,1,1,0,1825
+"Afghans","Afghanistan",1979,1,0,NA,0,1,1,1,1,360
+"Afghan resistance","Afghanistan",1988,1,0,-7,0,0,1,1,0,3285
+"Taliban","Afghanistan",1996,1,0,NA,0,0,0,1,0,1460
+"Taliban","Afghanistan",2006,0,0,NA,0,1,0,1,1,2190
+"Popular Democratic Army (UTO)","Tajikistan",1997,0.5,0,-6,0,1,0,1,0,1825
+"Kyrgyzstan Democratic Movement","Kyrgyzstan",1989,1,1,-7,0,1,0,1,0,360
+"Tulip Revolution","Kyrgyzstan",2005,1,1,-3,0,0,0,1,1,21
+"Republicans","China",1913,0,0,-6,0,0,1,1,1,730
+"First War of Independence","Tibet",1913,0.5,0,2,0,0,0,1,0,730
+"Yunnan rebellion","China",1918,0.5,0,-5,0,0,0,1,0,549
+"May the Fourth Movement","China",1919,0.5,1,1,0,0,0,0,0,360
+"Chinese communist movement","China",1949,1,0,-5,0,0,1,1,1,17155
+"Manchurian guerillas","China",1940,1,0,1,1,0,1,1,0,3285
+"Chinese rebels","China",1945,0,0,1,1,1,1,1,0,2920
+"Taiwanese Revolt","China",1947,0,0,NA,0,0,0,1,0,360
+"Sino-Tibeten war","Tibet",1951,0,0,-8,0,0,0,1,0,730
+"Tibetan resistance","China",1959,0,0,-8,0,0,0,1,0,1095
+"Hundred Flowers Movement","China",1957,0,1,-8,0,0,0,1,0,360
+"Red Guard","China",1968,0,0,-9,0,0,0,0,0,730
+"Democracy Movement","China",1979,0,1,-7,0,0,0,1,0,1095
+"","Tibet",1989,0,1,-7,0,1,0,1,0,549
+"","China",1989,0,1,-7,1,0,0,1,0,360
+"","Mongolia",1990,0.5,1,-7,0,1,0,1,0,367
+"","Taiwan",1985,0.5,1,-7,0,0,0,1,0,2190
+"Student Revolution","South Korea",1960,1,1,-4,0,1,0,0,1,360
+"","South Korea",1980,0,1,-8,0,0,0,1,0,360
+"","South Korea",1987,0.5,1,-5,0,0,0,1,0,360
+"","India",1945,0.5,1,10,0,0,0,1,0,9490
+"Moplah Rebellion","India",1922,0,0,NA,0,1,0,1,0,549
+"Hyderabad activists","India",1948,0,0,NA,0,0,0,1,0,4
+"Naga Rebellion","India",1964,0,0,9,0,0,0,1,0,3285
+"Mizo Revolt","India",1986,0.5,0,8,0,0,1,1,0,7200
+"Naxalite rebellion","India",1971,0,0,9,0,0,0,1,0,1460
+"Sikh insurgency","India",1994,0,0,8,0,0,0,1,0,3650
+"Kashmiri Muslim separatists","India",2006,0,0,NA,0,0,1,1,0,6935
+"","Pakistan",1969,0.5,1,1,0,0,0,1,0,120
+"Bengalis","Pakistan",1971,1,0,NA,0,0,1,1,1,360
+"Baluchi rebels","Pakistan",1977,0,0,8,0,1,0,1,0,1460
+"pro-dem movement","Pakistan",1983,0,1,-7,0,1,0,1,0,360
+"Mohajir","Pakistan",1995,0,0,8,0,0,0,1,0,549
+"Shanti Bahini","Bangladesh",1997,0,0,6,0,0,0,1,0,7665
+"","Bangladesh",1990,0.5,1,-5,0,0,0,0,0,367
+"Saya San's rebellion","Burma",1932,0,0,10,0,0,0,1,0,549
+"Karens","Burma",2006,0,0,NA,0,1,0,1,0,21170
+"Kachin rebels","Burma",1995,0,0,-7,0,0,0,1,0,4380
+"pro-dem movement","Burma",1988,0,1,-8,1,1,0,1,0,360
+"JVP","Sri Lanka",1971,0,0,8,0,1,0,1,0,89
+"LTTE","Sri Lanka",2006,0,0,NA,0,1,0,1,0,12775
+"The Stir","Nepal",1990,0.5,1,-2,0,0,0,1,0,367
+"CPN-M/UPF","Nepal",2006,0,0,NA,0,0,0,1,0,4015
+"","Nepal",2006,0.5,1,-6,0,0,0,1,0,19
+"communist rebels","Thailand",1973,0,0,-7,0,1,1,1,0,1095
+"student protests","Thailand",1973,1,1,-7,0,0,0,1,0,360
+"pro-dem movement","Thailand",1992,0.5,1,-1,0,0,0,1,0,54
+"","Thailand",2006,1,1,NA,0,0,0,1,1,179
+"Khmer Rouge","Cambodia",1975,1,0,NA,1,1,1,1,1,1825
+"Khmer Rouge","Cambodia",1997,0,0,1,1,1,1,1,0,7665
+"Pathet Lao","Laos",1975,1,0,NA,1,1,1,1,0,4745
+"North Vietnam (National Liberation Front)","Vietnam",1975,1,0,-3,1,1,1,1,1,6205
+"North Vietnam (National Liberation Front)","Vietnam",1975,1,0,10,1,1,1,1,1,6205
+"Indochina revolt","Vietnam",1954,1,0,10,0,0,0,1,0,3285
+"Malayan Emergency","Malaysia",1960,0.5,0,10,0,0,0,1,0,4380
+"Filipino nationalists","Philippines",1902,0,0,10,0,0,0,1,0,1095
+"Philippines Malayan insurgency","Philippines",1945,0,0,1,1,1,1,1,0,1460
+"Hukbalahap Rebellion","Philippines",1954,0,0,5,0,1,0,1,1,2920
+"Moro Islamic Liberation Front","Philippines",1980,0,0,-9,0,0,1,1,1,3650
+"New People's Army","Philippines",2006,0,0,NA,0,0,1,0,0,7300
+"People Power","Philippines",1983,1,1,-6,0,1,0,1,1,1095
+"Second People Power Movement","Philippines",2001,1,1,8,0,0,0,0,1,90
+"Indonesian Revolt","Indonesia",1949,1,0,10,1,0,0,1,0,1460
+"Moluccans","Indonesia",1950,0,0,3,0,0,0,0,0,360
+"Darul Islam","Indonesia",1953,0,0,0,0,0,0,0,0,360
+"leftists","Indonesia",1960,0,0,-5,0,0,0,0,1,1095
+"","West Papua",2006,0,1,NA,0,0,0,1,0,15330
+"Freitilin","East Timor",1977,0,0,-7,0,0,0,1,0,1095
+"GAM","Indonesia",2005,1,0,8,0,0,1,1,0,10585
+"Timorese resistance","East Timor",1999,1,1,-5,1,0,1,1,1,360
+"","Indonesia",1998,1,1,-7,0,0,0,1,0,367
+"Bougainville Revolt","Papua New Guinea",1998,0,0,10,0,0,0,1,0,3650

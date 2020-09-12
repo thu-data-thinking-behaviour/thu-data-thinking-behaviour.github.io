@@ -1,0 +1,253 @@
+# Support Vector Machines
+
+Let's now use a support vector machine to build a classification
+algorithm. Here, I am using the **e1071** package in R, which is essentially a wrapper to
+the LIBSVM library. It is based on the algorithm we described today (i.e.,
+directly solving the dual problem).
+
+## Housing data
+
+We will start by looking the housing data.
+
+```{r}
+set.seed(1)
+x <- read.csv("../../data/CAPA.csv", as.is=TRUE)
+names(x) <- tolower(names(x))
+x <- na.omit(x)
+```
+
+And construct the same training and testing sets as from the previous class:
+
+```{r}
+X <- x[, c(6,11:15,33:34)]
+trainFlag <- (runif(nrow(x)) < 0.66)
+y <- as.numeric(x$statefp == 6)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+Fit a linear SVM; the function will try to determine whether you want to do
+classification or regression (we have not discussed the extension to SVM
+for regression). I prefer to manually specify it because it can be subtle
+to miss the difference:
+
+```{r}
+library(e1071)
+
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="linear")
+out
+```
+
+And then predict the results using the predict function, noting
+that you need to subtract one from the results to match up to the
+input.
+
+```{r}
+svmYhat <- as.numeric(predict(out, Xtest)) - 1L
+mean(ytest != svmYhat)
+```
+
+Specifying a linear kernel,
+which attempts to find a hyperplane in space to separate the classes,
+notice that this
+performs roughly as well as the tree based classification algorithms.
+
+If we set the *kernel* parameter to the 'radial' kernel,
+
+```{r}
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="radial")
+out
+```
+
+The support vector machine performs significantly better than the base model:
+
+```{r}
+svmYhat <- as.numeric(predict(out, Xtest)) - 1L
+mean(ytest != svmYhat)
+```
+
+We can change the cost function, and in this case observe an
+improvement over the default cost:
+
+```{r}
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="radial", cost=5)
+svmYhat <- as.numeric(predict(out, Xtest)) - 1L
+mean(ytest != svmYhat)
+```
+
+As before, I want to fit an additive model to the training set and then use this as a
+meta-predictor in the random forest and gradient boosted tree models. However, instead
+of directly predicting the classification response (which we could do), I will instead
+use the additive model to predictive the most important variable in the tree models
+(median number of rooms):
+
+```{r}
+library(mgcv)
+x.gam2 <- gam(median_rooms
+  ~ s(median_house_value) + s(mean_household_income)
+  + s(population) + s(total_units) + s(vacant_units)
+  + s(median_household_income) + s(mean_household_size_owners)
+  + s(mean_household_size_renters),
+    data=x, subset=trainFlag)
+```
+
+We then reconstruct the test and training matrices:
+
+```{r}
+x$gamPred <- predict(x.gam2, x)
+X <- x[, c(6,11:15,33:35)]
+y <- as.numeric(x$statefp == 6)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+And re-run the random forest estimator:
+
+```{r}
+library(randomForest)
+rfObj <- randomForest(Xtrain, factor(ytrain),
+                      Xtest, factor(ytest),
+                      do.trace=FALSE, keep.forest=TRUE,
+                      ntree=500L)
+rfYhat <- predict(rfObj, Xtest)
+```
+
+As well as the support vector machines:
+
+```{r}
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="linear", cost=100)
+svmLinearYhat <- as.numeric(predict(out, Xtest)) - 1L
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="radial")
+svmRadialYhat <- as.numeric(predict(out, Xtest)) - 1L
+```
+
+And compare the results:
+
+```{r}
+mean(ytest != rfYhat)
+mean(ytest != svmLinearYhat)
+mean(ytest != svmRadialYhat)
+```
+
+And so, the support vector machine performs significantly better than the random
+forest in this example, when we use a non-linear kernel. Note that we could further
+try to optimize the cost and gamma parameters to get a slightly better overall
+fit.
+
+### Stacking
+
+How different are the predicted classes from the support vector machine compared
+to the random forest?
+
+```{r}
+table(svmRadialYhat, rfYhat)
+```
+
+In order to do some form of stacking, we need to compute both estimators on a
+probability scale. This can be done as follows:
+
+```{r}
+rfYhatProb <- predict(rfObj, Xtest, type="prob")[,2]
+out <- svm(Xtrain, ytrain, type="C-classification",
+            kernel="radial", probability=TRUE)
+svmRadialYhatProb <- attributes(predict(out, Xtest, probability=TRUE))$probabilities[,1]
+cor(rfYhatProb, svmRadialYhatProb)
+```
+
+Notice that again, the two estimators are quite similar but not exactly the same. If we
+blend these together, we get a slight improvement on the SVM:
+
+```{r}
+newYhat <- as.numeric(rfYhatProb*0.4 + svmRadialYhatProb*0.6 > 0.5)
+mean(newYhat != ytest)
+```
+
+### Confusion matrix
+
+To gain an understanding and appreciation for where we are still making errors,
+we can construct the *confusion matrix* of the predictions from the random forest
+estimator.
+
+```{r}
+table(svmRadialYhat, ytest)
+```
+
+It appears that we are not overly biased towards predicting points in either CA or
+PA. Where do these errant points occur?
+
+```{r, fig.width=9, fig.height=3}
+these <- which(svmRadialYhat != ytest)
+par(mar=c(0,0,0,0))
+plot(x$longitude[!trainFlag][these], x$latitude[!trainFlag][these],
+     axes=FALSE, xlab="", ylab="", col="white")
+snippets::osmap(tiles.url="http://c.tile.stamen.com/toner/",alpha=0.5)
+points(x$longitude[!trainFlag][these], x$latitude[!trainFlag][these],
+       pch=19, cex=0.4, col="orange")
+box()
+```
+
+
+### Hierarchical model
+
+Switching gears for a moment, let's consider the problem again of predicting
+the median house price for just the California data.
+
+Say that we wanted to utilize the county codes in a predictive model (this is
+quite relevant to problem set 3); how might we do this, particularly in support
+vector machines, which do not natively handle categorical variables?
+One way is to build a hierarchical model, which first ranks the counties in some
+fashion and then uses that ranking as a predictor variable.
+
+```{r}
+set.seed(1)
+x <- read.csv("../../data/CAPA.csv", as.is=TRUE)
+names(x) <- tolower(names(x))
+x <- na.omit(x)
+ca <- x[x$statefp==6,] # just take CA data
+trainFlag <- (runif(nrow(ca)) < 0.66)
+```
+
+This hierarchical model does not need to be overly complex. For example, just
+take the median house value for each tract:
+
+```{r}
+tab <- tapply(ca$median_house_value[trainFlag], ca$countyfp[trainFlag], mean)
+tab
+```
+
+And attach this to the data set:
+
+```{r}
+index <- match(ca$countyfp, names(tab))
+ca$countyMHP <- tab[index]
+X <- ca[, c(6,11:15,33:35)]
+y <- log(ca$median_house_value)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+Now, we can use this a random forest with this meta-predictor variable
+
+```{r}
+rfObj <- randomForest(Xtrain, ytrain, Xtest, ytest,
+                      do.trace=FALSE, keep.forest=TRUE,
+                      ntree=500)
+rfObj
+importance(rfObj)
+```
+
+Which is significantly better than the same model without the county
+summary statistic, which is incidentally now the most important variable
+in the random forest.
+

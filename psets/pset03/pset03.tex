@@ -1,0 +1,179 @@
+\documentclass[12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}}
+\newcommand{\argmax}{\mathop{\mathrm{arg\,max}}}
+
+\makeatletter
+\newcommand{\distas}[1]{\mathbin{\overset{#1}{\kern\z@\sim}}}%
+
+\geometry{top=1in, bottom=1in, left=1in, right=1in, marginparsep=4pt, marginparwidth=1in}
+
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancyplain}
+\fancyhf{}
+\cfoot{\thepage\ of \pageref{LastPage}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{12pt}
+
+\usepackage{marginnote} % For margin years
+\newcommand{\years}[1]{\marginnote{\scriptsize #1}} % New command for including margin years
+\renewcommand*{\raggedleftmarginnote}{}
+\setlength{\marginparsep}{-16pt} % Slightly increase the distance of the margin years from the content
+\reversemarginpar
+
+\setromanfont [Ligatures={Common}, Numbers={OldStyle}, Variant=01,
+ BoldFont={LinLibertine_RB.otf},
+ ItalicFont={LinLibertine_RI.otf},
+ BoldItalicFont={LinLibertine_RBI.otf}
+ ]{LinLibertine_R.otf}
+%\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Hoefler Text}
+
+%\usepackage[xetex, bookmarks, pdftitle={Taylor Arnold CV},pdfauthor={Taylor Arnold}]{hyperref}
+%\hypersetup{linkcolor=blue,citecolor=blue,filecolor=black,urlcolor=MidnightBlue}
+
+\usepackage{xunicode} % Allows generation of unicode characters from accented glyphs
+\defaultfontfeatures{Mapping=tex-text}
+
+\begin{document}
+
+\begin{center}
+{\bf Problem Set 03} \\
+Data Mining and Machine Learning -- Spring 2016 \\
+Due date: 2016-02-26 13:00
+\end{center}
+
+\medskip
+
+All assignments must be uploaded to the assignments tab in ClassesV2
+(notice that this is \textbf{not} the dropbox) by the date and time specified.
+Make sure that you follow the instructions exactly as described.
+This is a large class with a limited number of TA's and we will be
+grading parts of the assignment using an automated grading engine;
+you will lose points for things such as not naming files correctly.
+You may discuss problem sets with others, but must write up your own
+solutions. This means that you should have no need to look at other's
+final written solutions.
+
+You need to turn in all of your solutions as a zip compressed file, named
+\texttt{netid\_pset03.zip}, with your actual netid filled in in all lower
+case letters. This archive should contain the following files:
+\begin{itemize}
+\item \texttt{pset03.csv}
+\item \texttt{pset03.pdf}
+\end{itemize}
+The pdf file should contain any written solutions; the contents of the
+other file is described below.
+
+\medskip
+
+\textbf{Chicago Crime Data}
+
+The data referenced in the rest of this problem set is a subset of the
+Chicago Crime Data, released by the City of Chicago. It lists (almost)
+all reported crimes that occur within the city limits. You
+can download the training and test data from here:
+\begin{quote}
+\url{http://www.stat.yale.edu/~tba3/stat665/psets/pset03/data/chiCrimeTest.psv} \\
+\url{http://www.stat.yale.edu/~tba3/stat665/psets/pset03/data/chiCrimeTrain.psv} \\
+\end{quote}
+These are pipe separated files with a single header row. The variables year, month,
+and hour should be self-explanatory. The variables arrest and domestic are binary
+flags for whether an arrest was made for the crime and whether the crime was a
+domestic dispute. Location is a string from a relatively large dictionary showing
+the type of location where the crime occurred. The variables beat, district, ward,
+and community area are integers indicating the region where the crime happened.
+These should be treated as categorical variables.
+
+The variable \textbf{type} is
+a five level categorical response that you will want to build a prediction
+algorithm for. The categories correspond to:
+\begin{enumerate}
+\item THEFT OVER \$500
+\item SIMPLE BATTERY
+\item DECEPTIVE PRACTICE
+\item NARCOTICS
+\item BURGLARY
+\end{enumerate}
+I have down-sampled the data so that these all occur with roughly equal proportions
+in both the training and testing sets.
+
+You could in theory merge external datasets with this (such as weather or meta-data
+about the various regions). However, to keep the scope the problem set contained, we
+will require that you work only with the data provided.
+
+\textbf{Prediction Task}
+
+Your task is to build a predictive model that estimates which of the $5$ crime
+types is associated with a crime given the available covariates. You should
+ultimately make class predictions on the test set and save these as
+\texttt{pset03.csv}. Note that there will be only one column in the output,
+so even though it is called a \texttt{csv} file, there should be no commas.
+There should also be no row names or header rows. There should just be one
+of the numbers $1-5$ on each row.
+
+To help you with the formatting, and to make sure you do not make any silly
+mistakes, you should use these two files:
+\begin{quote}
+\url{http://www.stat.yale.edu/~tba3/stat665/psets/pset03/testScript03.R} \\
+\url{http://www.stat.yale.edu/~tba3/stat665/psets/pset03/pset03_sample.csv}
+\end{quote}
+The first is a script to check your results and the second is a partial list of
+the results from the test set. About 80\% of the rows are masked with NAs, but
+the other 20\% have the true class labels. By running the test script you can
+see how well you are doing on this small portion of the data, and can see that
+the format of the results is correct.
+
+\textit{Note:} You are free to use the 20\% sample of the test set for additional
+validation to which you can tune any hyper-parameters in your model. However,
+when we grade the set, only your results on truly hidden 80\% of the data will
+be used, so there is no need to spend time overly tuning to these values.
+
+\textit{Grading:} We will assign $4$ of the $10$ points to your predictions.
+Extra credit is available for particularly predictive models, but full credit
+will be given to anyone performing reasonably well (Hint: You should be aiming
+to get at least below a mis-classification rate of 41\%).
+
+\newpage
+
+\textbf{Write-Up}
+
+In the file \texttt{pset03.pdf}, write up a description of what you tried for
+building a prediction model and any thing of interest that you saw in the fitting
+procedure. In particular, you should at least address:
+\begin{itemize}
+\item How did you tune the various parameters in your models?
+\item How did you use hierarchical modeling (use the prediction in
+  one model as an input to another) or stacking to combine multiple
+  models together?
+\item How did you incorporate the categorical 'location' variable?
+  Did it influence the model significantly
+\item How did you incorporate the categorical variables
+  such as beat, district, ward, and community area
+  (you can use only one if you would like; but don't ignore them entirely)
+\item Describe the confusion matrix. What is the easiest category to
+  differentiate. Why? What categories are hard to tell apart? Does this
+  make sense to you?
+\item What you expect your mis-classification rate on the test set will be?
+\end{itemize}
+The write-up does not need any figures or overly fancy analysis; just answer
+the questions above and describe the approach you used. I'll leave the
+length up to your choosing, but somewhere between 1-2 pages is about the
+right length.
+
+\end{document}
+
+
+
+
+

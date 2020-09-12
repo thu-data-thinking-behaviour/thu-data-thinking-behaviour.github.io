@@ -1,0 +1,475 @@
+# Tree based models
+
+Last week, we talked about using decision trees for regression and
+classification problems. Here, we are going to actual apply these
+techniques to the California and Pennsylvania housing datasets.
+
+## Regression
+
+As a first task, let us again take just the California data and
+try to predict the logarithm of the median house value in each
+census tract.
+
+```{r}
+set.seed(1)
+x <- read.csv("../../data/CAPA.csv", as.is=TRUE)
+names(x) <- tolower(names(x))
+x <- na.omit(x)
+ca <- x[x$statefp==6,] # just take CA data
+trainFlag <- (runif(nrow(ca)) < 0.66)
+```
+
+In order to fit a single regression tree, we use the R package **tree**.
+As a starting point, I will just use longitude and latitude.
+
+```{r}
+library(tree)
+tf <- tree(log(median_house_value) ~ longitude + latitude, data = ca)
+plot(tf)
+text(tf, cex=0.75)
+```
+
+It is easy to incorporate more variables in the model. How much do
+these change the tree that is learned from the data?
+
+```{r}
+library(tree)
+tf <- tree(log(median_house_value) ~ longitude + latitude +
+           median_household_income + median_rooms,
+           data = ca)
+plot(tf)
+text(tf, cex=0.75)
+```
+
+Which variables might we want to incorporate if we want a highly predictive
+model? I am going to start by using these:
+
+```{r}
+names(ca)[c(6,11:15,33:34)]
+```
+
+I find it easier to use matrices directly rather than the formula interface
+in the **randomForest** package (it is much slower and makes subsequent
+predictions on new data more difficult). Here I define a matrix of predictors
+for both the training and testing sets, as well as the response for both
+training and testing.
+
+```{r}
+X <- ca[, c(6,11:15,33:34)]
+y <- log(ca$median_house_value)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+I will fit a small random forest estimator to this data with only 15 trees.
+Notice that the function allows me to directly give the test dataset to the
+function; if I also turn on the *do.trace* option, this shows how well we are
+predicting on the test set as the model learns more trees. Also notice that
+if I define a test set beforehand, we need to tell R to keep the forest in
+the output object. Otherwise the forest gets thrown away, making predictions
+on new datasets or calculating variable importance impossible (I have no idea
+why this they thought this would be a good default).
+
+```{r}
+library(randomForest)
+rfObj <- randomForest(Xtrain, ytrain, Xtest, ytest,
+                      do.trace=TRUE, keep.forest=TRUE,
+                      ntree=15L)
+rfObj
+```
+
+Notice that the randomForest estimator automatically calculates the training
+and testing MSE. Note: I would argue that we are treating **Xtest** and **ytest**
+as a validation set, but named them as such to following terminology in the
+*randomForest* function. Now, let's turn off the *do.trace* option and run the
+estimator with 500 trees.
+
+```{r}
+rfObj <- randomForest(Xtrain, ytrain, Xtest, ytest,
+                      do.trace=FALSE, keep.forest=TRUE,
+                      ntree=500L)
+rfObj
+rfYhat <- predict(rfObj, Xtest)
+mean((rfYhat - ytest)^2)
+```
+
+Here we have explicitly calculated the MSE as well. How much better does the addition
+of 485 more trees do compared to the simpler model? As mentioned last time, we can
+use a random forest to calculate the importance of each of the variables in the model,
+as measured by how often each variable is used for splitting on and how much it
+decreases the MSE. This is done with the *importance* function (remember, this only
+works if you set *keep.forest* to TRUE).
+
+```{r}
+importance(rfObj)
+```
+
+The scale of the output is not terribly important, and we are only going to focus on
+the relative sizes of these importance scores. Household income seems to be the most
+important, followed by the median number of rooms. Do these seem reasonable to you?
+
+While the exact structure of one tree in a random forest is difficult to make too much
+sense of in general, I think it is useful to understand how these trees are being stored
+as a data structure in R. Let's look at the first few rows of the first tree object
+of the random forest:
+
+```{r}
+head(getTree(rfObj,k=1),15)
+```
+
+Why do you think the R implementation is using a matrix to store this information
+rather than a hierarchical list that better represents the actual structure of the
+tree?
+
+Finally, note that we can easily increase the number of trees in the random forest
+even after it has already been constructed. Here we add 10 more trees with the
+*grow* function:
+
+```{r}
+rfObj <- grow(rfObj, how.many=10)
+rfObj
+```
+
+Let's not return to the additive models we studied two weeks ago. I will fit an
+additive model using the same exact variables we had used in the random forest
+on the training set:
+
+```{r}
+library(mgcv)
+ca.gam2 <- gam(log(median_house_value)
+  ~ s(median_household_income) + s(mean_household_income)
+  + s(population) + s(total_units) + s(vacant_units)
+  + s(median_rooms) + s(mean_household_size_owners)
+  + s(mean_household_size_renters)
+  , data=ca, subset=trainFlag)
+```
+
+Now, we can find predictions from the generalized additive model for both the
+training set and testing set. I will then reconstruct the **X** matrices to
+use this prediction itself as a predictor variable in the model.
+
+```{r}
+ca$gamPred <- predict(ca.gam2, ca)
+X <- ca[, c(6,11:15,33:35)]
+y <- log(ca$median_house_value)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+Now we can run another random forest on this new dataset. Notice that the
+MSE decreases slightly using this new variable.
+
+```{r}
+rfObj <- randomForest(Xtrain, ytrain, Xtest, ytest,
+                      do.trace=FALSE, keep.forest=TRUE)
+rfObj
+```
+
+```{r}
+rfYhat <- predict(rfObj, Xtest)
+mean((rfYhat - ytest)^2)
+```
+
+How important is this new variable in the random forest model?
+
+```{r}
+importance(rfObj)
+```
+
+Now, I want to try gradient boosting on this same dataset. For this I will
+use the excellent **gbm** package in R. There are two functions for fitting
+gradient boosted trees (or machines, as the package calls them): *gbm* and
+*gbm.fit*. The first takes a formula object and the second take raw matrices.
+As said before, I prefer to deal with the raw matrix version as it is faster,
+but one needs to be careful that the training and testing matrices are
+constructed exactly the same. We will start with using 100 trees and a relatively
+high shrinkage factor of 0.1:
+
+```{r}
+library(gbm)
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="gaussian",
+                  n.trees=100L, shrinkage=0.1)
+```
+
+Notice that the variable importance scores look a bit more lopsided than
+in the random forest case. Why might this be the case?
+
+```{r}
+summary(gbmObj,plotit=FALSE)
+```
+
+If we turn down shrinkage notice that the training deviance (a fancy way
+of saying the MSE) decreases much slower, and after 100 trees the variable
+importance scores are even more lopsided.
+
+```{r}
+library(gbm)
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="gaussian",
+                  n.trees=100L, shrinkage=0.01)
+summary(gbmObj,plotit=FALSE)
+```
+
+Now I will let it run for a while with a modest shrinkage penalty. We will
+then look at a plot of the MSE on the test set as a function of the number
+of trees.
+
+```{r}
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="gaussian",
+                  n.trees=1e4, shrinkage=0.03, verbose=FALSE)
+ntree <- seq(100,gbmObj$n.trees,length.out=100)
+gbmYhat <- predict(gbmObj, Xtest, n.trees=ntree)
+r <- gbmYhat - matrix(ytest,ncol=100,nrow=length(ytest),byrow=FALSE)
+mse <- apply(r^2,2,mean)
+plot(ntree, mse, type="l")
+abline(h=min(mse),lty="dashed")
+text(ntree[100],min(mse)+0.0004,signif(min(mse),3))
+```
+
+If we decrease the shrinkage penalty from 0.03 to 0.005, notice what happens
+to the MSE on the test set:
+
+```{r}
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="gaussian",
+                  n.trees=1e4, shrinkage=0.005, verbose=FALSE)
+ntree <- seq(500,gbmObj$n.trees,length.out=100)
+gbmYhat <- predict(gbmObj, Xtest, n.trees=ntree)
+r <- gbmYhat - matrix(ytest,ncol=100,nrow=length(ytest),byrow=FALSE)
+mse <- apply(r^2,2,mean)
+plot(ntree, mse, type="l")
+abline(h=min(mse),lty="dashed")
+text(ntree[100],min(mse)+0.0004,signif(min(mse),3))
+```
+
+Notice that the model does slightly worst after 2500 trees, but takes slightly
+longer to reach the optimal value. It also does not suffer as much when the number
+of trees is increased past this point. What if we try a still lower amount of
+shrinkage?
+
+```{r}
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="gaussian",
+                  n.trees=1e4, shrinkage=0.001, verbose=FALSE)
+ntree <- seq(500,gbmObj$n.trees,length.out=100)
+gbmYhat <- predict(gbmObj, Xtest, n.trees=ntree)
+r <- gbmYhat - matrix(ytest,ncol=100,nrow=length(ytest),byrow=FALSE)
+mse <- apply(r^2,2,mean)
+plot(ntree, mse, type="l")
+abline(h=min(mse),lty="dashed")
+text(ntree[100],min(mse)+0.0004,signif(min(mse),3))
+```
+
+**As a general rule of thumb, you want to slowly decrease the shrinkage and produce
+curves like this, generally until the point where the shrinkage penalty is so small
+that it never really decays on the backend.** This is in bold because it is one of
+those important secrets of applied machine learning that is known well by a set of
+practitioners but not actually written down anywhere (prominent, at least).
+
+For an ultimately model, we might choose to use this final model this MSE and pick
+only 8500 trees. Do you see now why we are treating the test set more like a validation
+set?
+
+```{r}
+gbmYhat <- predict(gbmObj, Xtest, n.trees=8500)
+mean((gbmYhat - ytest)^2)
+```
+
+Now, notice that we can improve both the random forest and gradient boosted models by
+averaging there predictions. As the random forest is slightly more predictive, I will
+weight it a bit higher:
+
+```{r}
+mean((rfYhat - ytest)^2)
+mean((gbmYhat - ytest)^2)
+mean((rfYhat*0.8 + gbmYhat*0.2 - ytest)^2)
+```
+
+Taking this a step farther, we can even weight together the random forest, gradient
+boosted tree, and additive model. This produces a slightly better model still.
+
+```{r}
+gamYhat <- as.numeric(ca$gamPred[!trainFlag])
+mean((rfYhat*0.8 + gbmYhat*0.1 + gamYhat*0.1 - ytest)^2)
+```
+
+The process of blending together models is called *stacking* (amongst many other names),
+and is an important technique in producing state of the art predictive models. It is
+also possible to `learn' the weights on a separate part of the validation set. In a way,
+this is what we did in using the additive model as part of the random forest and gradient
+boosted tree models.
+
+I would like to note that while for this small example it seems that gradient boosting
+is a lot more work with little reward, this is not in general the case. Typically it will
+be able to significantly improve on the results of the random forest.
+
+It may have seemed like I should use a separate chunk of data to fit the additive model
+as opposed to the random forest and gradient boosted trees. It is true that given a large
+enough dataset, this would be the ideal. However, I am not particularly worried about
+this effecting the output. Why? Additive models have a relatively low complexity when
+we only have 8 variables, and will rarely overfit to the training data.
+
+## Classification
+
+In general, there is no big mysterious difference between classification and regression
+with decision trees. Some of the details are important to understand in terms of how these
+methods are employed in practice though, so I think it is useful to actually look at
+an example. I will take the same dataset as in the previous section:
+
+```{r}
+set.seed(1)
+x <- read.csv("../../data/CAPA.csv", as.is=TRUE)
+names(x) <- tolower(names(x))
+x <- na.omit(x)
+```
+
+But now use the entire dataset, setting the class that we want to predict equal to which
+state the census tract is located in:
+
+```{r}
+X <- x[, c(6,11:15,33:34)]
+trainFlag <- (runif(nrow(x)) < 0.66)
+y <- as.numeric(x$statefp == 6)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+We can run the random forest model, explicitly coding the y variables as factors to tell
+the function to run classification:
+
+```{r}
+rfObj <- randomForest(Xtrain, factor(ytrain),
+                      Xtest, factor(ytest),
+                      do.trace=FALSE, keep.forest=TRUE,
+                      ntree=500L)
+rfYhat <- predict(rfObj, Xtest)
+```
+
+To evaluate the model, I will use the misclassification rate on the test set:
+
+```{r}
+mean(rfYhat != ytest)
+```
+
+Now, as before, let's look at the variable importance scores for this model. Do these
+surprise you at all?
+
+```{r}
+importance(rfObj)
+```
+
+We can also fit a gradient boosted tree to the classification problem. In order to
+tell the *gbm.fit* function that we want classification, I will set the *distribution*
+parameter to the 'bernoulli' loss. How do the important variable differ from the
+random forest? How does the mis-classification rate compare to the random forest
+estimator?
+
+```{r}
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="bernoulli",
+                  n.trees=1e4, shrinkage=0.005, verbose=FALSE)
+gbmYhat <- as.numeric(predict(gbmObj, Xtest, n.trees=gbmObj$n.trees) > 0)
+summary(gbmObj, plotit=FALSE)
+mean(gbmYhat != ytest)
+```
+
+As before, I want to fit an additive model to the training set and then use this as a
+meta-predictor in the random forest and gradient boosted tree models. However, instead
+of directly predicting the classification response (which we could do), I will instead
+use the additive model to predictive the most important variable in the tree models
+(median number of rooms):
+
+```{r}
+library(mgcv)
+x.gam2 <- gam(median_rooms
+  ~ s(median_house_value) + s(mean_household_income)
+  + s(population) + s(total_units) + s(vacant_units)
+  + s(median_household_income) + s(mean_household_size_owners)
+  + s(mean_household_size_renters),
+    data=x, subset=trainFlag)
+```
+
+I will now find the predictions of these variables and put these predictions in the
+predictor matrices **Xtrain** and **Xtest**.
+
+```{r}
+x$gamPred <- predict(x.gam2, x)
+X <- x[, c(6,11:15,33:35)]
+trainFlag <- (runif(nrow(x)) < 0.66)
+y <- as.numeric(x$statefp == 6)
+Xtrain <- X[trainFlag,]
+ytrain <- y[trainFlag]
+Xtest <- X[!trainFlag,]
+ytest <- y[!trainFlag]
+```
+
+This gives an impressive improvement on the misclassification rate for the random
+forest model:
+
+```{r}
+rfObj <- randomForest(Xtrain, factor(ytrain),
+                      Xtest, factor(ytest),
+                      do.trace=FALSE, keep.forest=TRUE,
+                      ntree=500L)
+rfYhat <- predict(rfObj, Xtest)
+mean(rfYhat != ytest)
+```
+
+To gain an understanding and appreciation for where we are still making errors,
+we can construct the *confusion matrix* of the predictions from the random forest
+estimator.
+
+```{r}
+table(rfYhat, ytest)
+```
+
+It appears that we are not overly biased towards predicting points in either CA or
+PA. Where do these errant points occur?
+
+```{r, fig.width=9, fig.height=3}
+these <- which(rfYhat != ytest)
+par(mar=c(0,0,0,0))
+plot(x$longitude[!trainFlag][these], x$latitude[!trainFlag][these],
+     axes=FALSE, xlab="", ylab="", col="white")
+snippets::osmap(tiles.url="http://c.tile.stamen.com/toner/",alpha=0.5)
+points(x$longitude[!trainFlag][these], x$latitude[!trainFlag][these],
+       pch=19, cex=0.4, col="orange")
+box()
+```
+
+As we may have expected, areas in the most urban parts of PA and the rural
+parts of CA are the most likely to be classified incorrectly.
+
+Finally, we can see that the additive model meta-variable also has a similar
+improvement on the gradient boosted trees:
+
+```{r}
+gbmObj <- gbm.fit(Xtrain, ytrain, distribution="bernoulli",
+                  n.trees=2500, shrinkage=0.05, verbose=FALSE)
+gbmYhat <- as.numeric(predict(gbmObj, Xtest, n.trees=gbmObj$n.trees) > 0)
+summary(gbmObj, plotit=FALSE)
+```
+
+Though it still fails to best the random forest estimator in this particular case:
+
+```{r}
+mean(rfYhat != ytest)
+mean(gbmYhat != ytest)
+```
+
+Though, as stated before, this is often not the case in more complex models.
+
+## Overview
+
+We have looked at three methods for combining simple models into powerful
+prediction engines:
+
+* Bagging (random forests)
+* Boosting (gradient boosted trees)
+* Stacking
+
+We have seen that these ideas can be used in conjunction with one another to produce
+fairly powerful predictive models.
+

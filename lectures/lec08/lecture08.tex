@@ -1,0 +1,180 @@
+\documentclass[xetex,mathserif,serif,aspectratio=169]{beamer}
+
+\input{../import.tex}
+\usepackage[]{algorithm2e}
+\usepackage{../kbordermatrix}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+\vfill
+
+{\fontsize{0.7cm}{0cm}\selectfont Lecture 08 \\\vspace{0.2cm} Decision Trees II}\\\vspace{0.5cm}
+15 February 2016
+
+\vspace{2cm}
+
+\begin{minipage}{0.6\textwidth}
+Taylor B. Arnold \\
+Yale Statistics \\
+STAT 365/665
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}\raggedleft
+\includegraphics[scale=0.3]{../yale-logo.png}
+\end{minipage}%
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+Updated office hours:
+\begin{itemize}
+\item Taylor Arnold -- Wednesdays, 16:00 - 17:00, HH 24
+\item Elena Khusainova -- Tuesdays, 13:00-15:00, HH 24, Basement
+\item Yu Lu -- Wednesdays, 19:00-20:30, HH 24, Basement
+\item Jason Klusowski -- Thursdays, 19:00-20:30, HH 24
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+Problem Set 2:
+\begin{itemize}
+\item We will give you full credit either way you approach this, but your
+solution for Question \#4 will be much more interesting if you weight the
+MSE of the census tracts by their population
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+Problem Set 1:
+\begin{itemize}
+\item Finished grading them; will likely post grades to ClassesV2 by tomorrow morning \pause
+\item Actual grades were okay; median of 9/10, mean of 8.5/10 \pause
+\item However, many people not following directions:
+\begin{itemize}
+\item not putting files in a `.zip' directory
+\item using a different zip format (.rar, .7z, .tar.gz)
+\item naming files incorrectly
+\item including column names, quotes, or both in the set of predicted values \pause
+\end{itemize}
+\item As well, many of the R and Python scripts did not actually run correctly;
+a common problem being that they threw errors when they could not find global variables
+or local files
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+Problem Set 1, cont.
+\begin{itemize}
+\item Paying attention to these details is very important!
+\item In almost all cases, you got full credit for the implementation and
+data analysis questions as long as you wrote \textit{something} and your code
+ran without any errors
+\item Future problem sets will likely have fewer `parts' to them,
+but the actually content will be graded more strictly, so you do not
+want to lose points on silly things
+\item Test your code!
+\item Remember:
+\begin{itemize}
+\item No late submissions (unless you have a true emergency, and for undergraduates
+a Deans excuse)
+\item We do drop the lowest grade from the final assignment
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+\begin{itemize}
+\item Today:
+\begin{itemize}
+\item Finish decision trees
+\item Walk through an analysis of trees for classification and regression
+\item Introduction to SVMs (time permitting)
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+\textbf{\yblue{Gradient boosted trees}}
+
+Last time, we looked at decision trees and random forests.
+There is one additional variant on these ideas which has
+been shown to produce extremely powerful predictions. Called
+\blue{gradient boosted trees}.
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+\textbf{\yblue{Gradient boosted trees, cont.}}
+
+The algorithm for this can conceptually be described as follows:
+\begin{enumerate}
+\item Fit a decision tree $T^{(1)}$ on a randomly sampled subset of the data
+(but using all of the variables at each node, unlike RF) and call the
+predicted values from this tree on the entire dataset $\widehat{y}^{(1)}$. \pause
+\item Calculate the residuals $r^{(1)} = y - \widehat{y}^{(1)}$. \pause
+\item Fit a new decision tree $T^{(2)}$ on a random resampling of the residuals
+$r^{(1)}$, and calculate the predicted values $\widehat{r}^{(1)}$ for the
+entire dataset. \pause
+\item Now, set $\widehat{y}^{(2)}$ to be $\widehat{y}^{(1)} + \widehat{r}^{(1)}$ and
+set the new residuals to be $r^{(2)} = y - \widehat{y}^{(2)}$. \pause
+\item Calculate decision tree $T^{(3)}$ on a randomly sampled set of the residuals $r^{(2)}$,
+and calculate the predicted values $\widehat{r}^{(2)}$ for the entire dataset. \pause
+\item Repeat as needed until you have predictions $\widehat{y}^{(K)}$.
+\end{enumerate}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile] \frametitle{} \oldB \small
+
+\textbf{\yblue{Gradient boosted trees, cont.}}
+
+The actual algorithm is modified it two ways:
+\begin{enumerate}
+\item The predicted values in the terminal nodes of the decision tree $T^{(j)}$
+for any $j$ are not determined just by the sampled set of data, but rather chosen
+to minimize the actual loss of using the $\widehat{y}^{(j)}$.
+\item The values for the predicted residuals $\widehat{r}^{(j)}$ is `shrunk' towards
+zero by a factor of $0 < \rho \leq 1$. This value is called the \magenta{learning rate}.
+\end{enumerate}
+Due to the learning rate factor, it makes sense to center the input variables before
+applying this algorithm (this is usually done by the software).
+
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+Problem set #1 Grading Rubric:
+
+  1 points, correct file names, zip files, ect.
+    -1: "no zip file found" or "files pset01.pdf, pset01.csv, pset01.py/R not found"
+
+  3 points, csv file of predictions
+    -0.5 points for "knn values not correct"
+    -0.5 points for "lm values not correct"
+    -0.5 points for "ridge values not correct"
+    -0.5 points for "knn sign not correct" (correlations are not the correct sign)
+    -3 points for "unreadable csv file" or "empty csv file"
+
+  4 points, R or Python implementation
+    -2 points for "cannot source python file" or "cannot source R file"
+    -1 points for "no function my_knn found" (only applies if R/Python file found)
+    -1 points for "no function my_ksmooth found" (only applies if R/Python file found)
+
+  2 points, data analysis write-up
+    -2 points for "no pdf file found"
+
+
+Remember, we will drop your lowest grade of the semester and average the
+  remaining assignments (expecting there to be 9 total). This will map
+  to final grades as follows:
+
+  10    A    H
+   9    A-   H
+   8    B+   HP
+   7    B    HP
+   6    B-   HP
+   5    C+   P
+   4    C    P
+   3    C-   P
+   2    D    F
+   1    D    F
+
+
+
+
